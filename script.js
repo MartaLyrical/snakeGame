@@ -11,6 +11,8 @@ var scoreCounterUpto = 1;
 var snakeSpeed;
 var score = 0;
 
+
+// Levels
 if (!localStorage.getItem("snakeEasy")) {
   mySel(".high1").innerText = "0";
 } else {
@@ -31,7 +33,9 @@ if (!localStorage.getItem("snakeVHard")) {
 } else {
   mySel(".high4").innerText = localStorage.getItem("snakeVHard");
 }
-//default hide the game
+//
+
+//Speed
 mySel(".div").classList.add("d-none");
 mySelAll(".sbtn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -56,7 +60,11 @@ mySelAll(".sbtn").forEach((btn) => {
     startGame();
   });
 });
+//
 
+
+
+// Start Game Function
 function startGame() {
   //hide level block and show snake box
   mySel(".div").classList.remove("d-none");
@@ -97,14 +105,22 @@ function startGame() {
     };
   }
 
-  //checkMove
+//
+
+
+
+
+
+//checkMove Function
   var curKey = "";
   function checkMove() {
     document.addEventListener("keydown", (e) => {
       curKey = e.key;
     });
+//
 
-    //for mobile users
+  
+    //for mobile users function
     mySelAll(".arrowBtns").forEach((btn) => {
       btn.addEventListener("click", () => {
         if (btn.classList.contains("left")) {
@@ -121,15 +137,21 @@ function startGame() {
 
     return curKey;
   }
+ //
 
+
+ // Snake List
   var snake = [
     [0, 0],
     [0, 1],
     [0, 2],
     [0, 3],
   ];
+//
 
-  //remove All Effect (of previous active td(s))
+
+
+  //remove All Effect (of previous active td(s)) functions
   removeAllEfect = () => {
     let allTd = mySelAll("td");
 
@@ -137,8 +159,12 @@ function startGame() {
       td.classList.remove("active");
     });
   };
+//
 
-  //change the direction
+
+
+
+//change the direction function
   changeDirection = () => {
     removeAllEfect();
     snake.forEach((cur, index) => {
@@ -147,7 +173,7 @@ function startGame() {
         snake[snake.length - 1][0] == foodX &&
         snake[snake.length - 1][1] == foodY
       ) {
-        //increase score
+        //score module please
         if (scoreCounter == scoreCounterUpto && score != 0) {
           score = score + 5;
           mySel(".sc").innerHTML = `<h1 class="effect">+ 5</h1>`;
@@ -159,10 +185,8 @@ function startGame() {
           ++scoreCounter;
           ++score;
         }
-
         //show score
         mySel(".score").innerText = score;
-
         // remove old food
         mySel("table").children[0].children[parseInt(foodX)].children[
           parseInt(foodY)
@@ -187,7 +211,13 @@ function startGame() {
       ].classList.add("active");
     });
   };
+//
 
+
+
+
+
+// Keyboard Functions
   var lastMoves = [""];
 
   const changeMove = setInterval(() => {
@@ -227,8 +257,12 @@ function startGame() {
     changeDirection();
     checkOverride();
   }, snakeSpeed);
+//
 
-  //movement
+
+
+
+  //movement function
   function up(row) {
     snake[snake.length - 1][0] = row;
     snake.push([snake[snake.length - 1][0] - 1, snake[snake.length - 1][1]]);
@@ -249,10 +283,14 @@ function startGame() {
     snake.push([snake[snake.length - 1][0], snake[snake.length - 1][1] - 1]);
     snake.shift();
   }
+//
+
+
+
 
   food();
 
-  //generate random food
+  //generate random food function
   function food() {
     foodX = randomRow();
     foodY = randomRow();
@@ -262,7 +300,14 @@ function startGame() {
       parseInt(foodY)
     ].classList.add("food");
   }
+//
 
+
+
+
+
+
+//function Gameover
   function gameOver() {
     let ii = 0;
     clearInterval(changeMove);
@@ -308,8 +353,15 @@ function startGame() {
       // window.location.reload()
     }
   }
+//
 
-  //fix override snake
+
+
+
+
+
+
+  //fix override snake function
   function checkOverride() {
     for (let i = 0; i < snake.length - 2; i++) {
       if (
@@ -322,3 +374,4 @@ function startGame() {
     }
   }
 }
+//
