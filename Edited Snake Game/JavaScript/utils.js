@@ -1,0 +1,1 @@
+export const randomRow = () => Math.floor(Math.random() * numOfRow);
